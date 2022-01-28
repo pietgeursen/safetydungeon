@@ -1,6 +1,13 @@
-import firebase from 'firebase/compat/app';
-import * as firebaseui from 'firebaseui'
-import 'firebaseui/dist/firebaseui.css'
+import firebase from "firebase/compat/app";
+import * as firebaseui from "firebaseui";
+import "firebaseui/dist/firebaseui.css";
+
+import Vue from "vue";
+import App from "./App.vue";
+
+new Vue({
+  render: (h) => h(App),
+}).$mount("#vue-app");
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -9,7 +16,7 @@ const firebaseConfig = {
   projectId: "safetydungeon",
   storageBucket: "safetydungeon.appspot.com",
   messagingSenderId: "156587932337",
-  appId: "1:156587932337:web:116ae943f4f2ff92790090"
+  appId: "1:156587932337:web:116ae943f4f2ff92790090",
 };
 
 // Initialize Firebase
@@ -31,7 +38,7 @@ const ui = new firebaseui.auth.AuthUI(firebase.auth());
 const uiConfig = {
   callbacks: {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      console.log("great success!", authResult)
+      console.log("great success!", authResult);
       // User successfully signed in.
       // Return type determines whether we continue the redirect automatically
       // or whether we leave that to developer to handle.
@@ -40,12 +47,12 @@ const uiConfig = {
     uiShown: function () {
       // The widget is rendered.
       // Hide the loader.
-      document.getElementById('loader').style.display = 'none';
-    }
+      document.getElementById("loader").style.display = "none";
+    },
   },
   // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-  signInFlow: 'popup',
-  signInSuccessUrl: '/',
+  signInFlow: "popup",
+  signInSuccessUrl: "/",
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
@@ -56,10 +63,10 @@ const uiConfig = {
     // firebase.auth.PhoneAuthProvider.PROVIDER_ID
   ],
   // Terms of service url.
-  tosUrl: '<your-tos-url>',
+  tosUrl: "<your-tos-url>",
   // Privacy policy url.
-  privacyPolicyUrl: '<your-privacy-policy-url>'
+  privacyPolicyUrl: "<your-privacy-policy-url>",
 };
 
 // The start method will wait until the DOM is loaded.
-ui.start('#firebaseui-auth-container', uiConfig);
+ui.start("#firebaseui-auth-container", uiConfig);
