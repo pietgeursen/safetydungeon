@@ -2,6 +2,12 @@ import firebase from "firebase/compat/app";
 import * as firebaseui from "firebaseui";
 import "firebase/auth";
 import "firebase/database";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc
+} from 'firebase/firestore/lite';
 
 // Your web app's Firebase configuration
 const config = {
@@ -15,21 +21,47 @@ const config = {
 
 const app = firebase.initializeApp(config);
 const auth = firebase.auth();
-//const db = app.database();
+const db = getFirestore(app);
+
+async function makeRoom(db) {
+  const roomsCol = collection(db, 'rooms');
+  await addDoc(roomsCol, {
+    name: "pit trap",
+  });
+  console.log("Added room");
+}
+
+makeRoom(db)
+
+async function getRooms(db) {
+  const roomsCol = collection(db, 'rooms');
+  const roomsSnapshot = await getDocs(roomsCol);
+  const roomsList = roomsSnapshot.docs.map(doc => doc.data());
+  return roomsList;
+}
+
+const logRooms = (rooms) => {
+  console.log(rooms);
+  console.log('Hi!');
+}
+
+getRooms(db).then(logRooms)
 
 const authUiConfig = {
   signInSuccessUrl: "/",
-  signInOptions: [
-    {
-      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      customParameters: {
-        prompt: "select_account",
-      },
+  signInOptions: [{
+    provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    customParameters: {
+      prompt: "select_account",
     },
-  ],
+  }, ],
 };
 
 const authUi = new firebaseui.auth.AuthUI(auth);
 
 export default app;
-export { auth, authUi, authUiConfig };
+export {
+  auth,
+  authUi,
+  authUiConfig
+};
