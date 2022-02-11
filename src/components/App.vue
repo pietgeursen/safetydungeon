@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <template v-if="$store.state.user">
-      <h2>You are logged in!</h2>
+      <p>You are logged in!</p>
       <div class="logout">
         <button @click="logout">Logout</button>
       </div>
@@ -12,9 +12,9 @@
         <Auth />
       </div>
     </template>
-    <hr />
+    <!-- <hr />
     <h2>Display multiple rooms</h2>
-    <div><GetRooms /></div>
+    <div><GetRooms /></div> -->
   </div>
 </template>
 
