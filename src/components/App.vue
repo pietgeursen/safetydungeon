@@ -12,24 +12,32 @@
         <Auth />
       </div>
     </template>
+    <hr />
+    <h2>Display multiple rooms</h2>
+    <div><GetRooms /></div>
   </div>
 </template>
 
 <script>
-import Auth from './Auth';
+import Auth from "./Auth";
+
+import DisplayRoom from "./DisplayRoom";
+import GetRooms from "./GetRooms";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Auth,
+    DisplayRoom,
+    GetRooms,
   },
   methods: {
     logout() {
-      this.$store.dispatch('LOGOUT');
+      this.$store.dispatch("LOGOUT");
     },
   },
   mounted() {
-    this.$store.dispatch('AUTH_CHECK');
+    this.$store.dispatch("AUTH_CHECK");
   },
 };
 </script>

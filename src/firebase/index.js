@@ -31,21 +31,7 @@ async function makeRoom(db) {
   console.log("Added room");
 }
 
-makeRoom(db)
-
-async function getRooms(db) {
-  const roomsCol = collection(db, 'rooms');
-  const roomsSnapshot = await getDocs(roomsCol);
-  const roomsList = roomsSnapshot.docs.map(doc => doc.data());
-  return roomsList;
-}
-
-const logRooms = (rooms) => {
-  console.log(rooms);
-  console.log('Hi!');
-}
-
-getRooms(db).then(logRooms)
+// makeRoom(db)
 
 const authUiConfig = {
   signInSuccessUrl: "/",
