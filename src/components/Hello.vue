@@ -2,16 +2,12 @@
   <div class="hello">
     <hr />
     <p>
-      <b
-        >You have entered the Safety Dungeon. We secretly added a new room
-        (check the console)</b
-      >
+      <b>You have entered the Safety Dungeon. Would you like to add a room?</b>
     </p>
     <div><MakeRooms /></div>
     <hr />
-    <!-- <h1>{{ msg }}</h1> -->
     <p>
-      <b>There are many rooms to explore. Refresh to see the secret room.</b>
+      <b>There are many rooms to explore. Refresh to see your new room.</b>
     </p>
     <div><GetRooms /></div>
   </div>

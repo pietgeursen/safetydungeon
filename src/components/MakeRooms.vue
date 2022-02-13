@@ -1,8 +1,10 @@
 <template>
   <div>
     <!-- interface to make a room -->
-    <!-- <button @click="submitRoom"></button>
-    },-->
+    <form @submit.prevent="submitRoom(room)">
+      <input type="room" required v-model="room" />
+      <div class="submit"><button>Make a new room</button></div>
+    </form>
   </div>
 </template>
 
@@ -32,19 +34,29 @@ const app = firebase.initializeApp(config);
 const auth = firebase.auth();
 const db = getFirestore(app);
 
-async function makeRoom(db) {
+async function makeRoom(db, name) {
   const roomsCol = collection(db, "rooms");
   await addDoc(roomsCol, {
-    name: "orange room",
+    name: name,
   });
-  console.log("Added room");
+  console.log("Sent room to db");
 }
 
 export default {
   components: {},
+  methods: {
+    submitRoom(name) {
+      makeRoom(db, name).then(console.log("Room added"));
+    },
+  },
+  data() {
+    return {
+      room: "",
+    };
+  },
   setup() {},
   mounted() {
-    makeRoom(db).then(console.log("Room added"));
+    // makeRoom(db).then(console.log("Room added"));
   },
 };
 </script>
