@@ -11,7 +11,6 @@
 
 <script>
 import firebase from "firebase/compat/app";
-// import * as firebaseui from "firebaseui";
 import "firebase/auth";
 import "firebase/database";
 import {
@@ -19,7 +18,8 @@ import {
   collection,
   getDocs,
   addDoc,
-} from "firebase/firestore/lite";
+  onSnapshot
+} from "firebase/firestore";
 
 import DisplayRoom from "./DisplayRoom";
 
@@ -36,13 +36,19 @@ const config = {
 const app = firebase.initializeApp(config);
 const auth = firebase.auth();
 const db = getFirestore(app);
+const roomsCol = collection(db, "rooms");
 
-async function getRooms(db) {
-  const roomsCol = collection(db, "rooms");
+async function getRooms() {
   const roomsSnapshot = await getDocs(roomsCol);
   const roomsList = roomsSnapshot.docs;
   // const roomsList = roomsSnapshot.docs.map((doc) => doc.data());
   return roomsList;
+}
+
+function subscribeToRoomUpdates(onUpdate){
+  onSnapshot(roomsCol, (rooms) => {
+    onUpdate(rooms.docs)
+  })
 }
 
 export default {
@@ -52,14 +58,13 @@ export default {
   data() {
     const roomsList = [];
     return {
-      roomsList: roomsList,
+      roomsList,
     };
   },
   setup() {},
   mounted() {
-    getRooms(db).then((rooms) => {
-      console.log(rooms);
-      this.roomsList = rooms;
+    subscribeToRoomUpdates((rooms) => {
+        this.roomsList = rooms;
     });
   },
 };
